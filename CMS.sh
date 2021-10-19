@@ -5,7 +5,7 @@ export BLUE="\033[0;34m"
 export CYAN="\033[0;36m"
 export NC="\033[0m" #NC - No Color
 
-re='\^[0-9]+$' #Check if variable is an integer - https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash/806923 - Date Visited: 19.10.2021
+export re='\^[0-9]+$' #Check if variable is an integer - https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash/806923 - Date Visited: 19.10.2021
 
 canCheckin=true
 canCheckout=true
@@ -20,20 +20,10 @@ do
 
 	case ${inputArr[0]} in
 		"help")
-		if [ ${#inputArr[@]} -eq 2 ]; #Checks if the array has 2 elements
-		then
-			if ! [[ ${inputArr[@]:1} =~ $re ]]; #Check if variable is an integer - https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash/806923 - Date Visited: 19.10.2021
-			then
-				echo "Help me!" #Run help script
-				./help.sh "${inputArr[@]:1}"
-			else
-				echo -e "Incorrect argument. Argument should be an integer.\n\t-E.g - ${BLUE}help${NC} ${CYAN}3${NC}"
-			fi
-		else
-			echo -e "Not enough or too many arguments for ${BLUE}'help'${NC}\n\t-Try ${BLUE}help${NC} ${CYAN}<pageNo>${NC}\n\t-E.g - ${BLUE}help${NC} ${CYAN}3${NC}"
-		fi
+			echo "Help me!" #Run help script
+			./help.sh ${inputArr[@]:1}
 		;;
-		"mkrepo")
+		"makerepo")
 			echo "Create new repo" #Runs Create repo script
 			;;
 		"openrepo")
