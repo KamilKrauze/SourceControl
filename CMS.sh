@@ -1,24 +1,37 @@
 #!/bin/bash
 #Create variables that give text color - https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux - Date Visted: 19.10.2021
-RED="\033[0;31m"
-BLUE="\033[0;34m"
-NC="\033[0m" #NC - No Color
+export RED="\033[0;31m"
+export BLUE="\033[0;34m"
+export CYAN="\033[0;36m"
+export NC="\033[0m" #NC - No Color
+
+re='\^[0-9]+$' #Check if variable is an integer - https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash/806923 - Date Visited: 19.10.2021
 
 canCheckin=true
 canCheckout=true
 
 userIn="."
-inputArr=($userIn)
+inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
 while [ "${inputArr[0]}" != "quit" ]
 do
-	read -p "> " userIn
+	read -p ">" userIn
 	inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
-	if [ "$1" == "help" ]
+	if [ "${inputArr[0]}" == "help" ]
 	then
-		echo "Help me!" #Run help script
-		../Bash\ Scripts/functionTest.sh
+		if [ ${#inputArr[@]} -eq 2 ]; #Checks if the array has 2 elements
+		then
+			if [[ ${inputArr[@]:1} =~ $re ]]; #Check if variable is an integer - https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash/806923 - Date Visited: 19.10.2021
+			then
+				echo "Help me!" #Run help script
+				echo "${inputArr[@]:1}"
+			else
+				echo -e "Incorrect argument. Argument is an integer.\n\t-E.g - ${BLUE}help${NC} ${CYAN}3${NC}"
+			fi
+		else
+			echo -e "Not enough or too many arguments for ${BLUE}'help'${NC}\n\t-Try ${BLUE}help${NC} ${CYAN}<pageNo>${NC}\n\t-E.g - ${BLUE}help${NC} ${CYAN}3${NC}"
+		fi
 	
 	elif [ "${inputArr[0]}" == "mkrepo" ];
 	then
@@ -54,7 +67,6 @@ do
 	elif [ "${inputArr[0]}" == "quit" ];
 	then
 		echo -e "Quiting..." #Quits the script
-		sleep .7
 	
 	else
 		echo -e "\t${RED}Command '$userIn' does not exist...${NC}\n\t\v- Use the ${BLUE}'help'${NC} command to get a list of commands this script supports." #Outputs if user input in incorrect
