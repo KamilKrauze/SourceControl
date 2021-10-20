@@ -25,6 +25,6 @@ mkdir ${repositoryPath}/.vc/${newCommitFolder}
 # create soft link to all files from last commit folder
 ln -s ${repositoryPath}/.vc/${lastCommitFolder}/* ./testRepo/.vc/${newCommitFolder}
 # copy the checked-in file separately so it is not a soft link
-cp --remove-destination ${fileToCheckIn} $_
+mv ${fileToCheckIn} $_
 
 echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt

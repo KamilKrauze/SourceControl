@@ -53,7 +53,7 @@ do
 			export canCheckout
 
 			echo "Pulling from repo..." #Runs check out script
-			./checkout.sh
+			./checkout.sh ${inputArr[@]:1}
 			;;
 	
 		"quit")
