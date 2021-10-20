@@ -10,6 +10,9 @@ export re='\^[0-9]+$' #Check if variable is an integer - https://stackoverflow.c
 canCheckin=true
 canCheckout=true
 
+echo -e "Enter ${CYAN}'help'${NC} to get a command list."
+echo -e "Enter ${CYAN}'quit'${NC} to exit CMS.\n\n"
+
 userIn="."
 inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
