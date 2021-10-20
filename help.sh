@@ -12,8 +12,11 @@ function page(){
 
 function commandList()
 {
-	echo -e "- ${BLUE}makerepo${NC} ${CYAN}<repoName>${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<workingDirectory>${NC} - Creates a repository with a user specified name, the repository's location and working directory is specified by the user."
+	echo -e "- ${BLUE}makerepo${NC} ${CYAN}<repoName>${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<workingDirectory>${NC}\n - Creates a repository with a user specified name, the repository's location and working directory is specified by the user."
 	echo -e "\n- ${BLUE}openrepo${NC} ${CYAN}<repoName>${NC} - Opens a repository, by specfying the repository's name."
+	echo -e "\n- ${BLUE}addfiles${NC} ${CYAN}<filePath>${NC} - Adds file to the working directory's repository."
+	echo -e "\n- ${BLUE}checkin${NC} - Checks in the working directory's files to the repository and updates if files have been modified."
+	echo -e "\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC}- Replaces the current files within the working directory from the repo."
 }
 
 arr=($@)
