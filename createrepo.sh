@@ -26,7 +26,7 @@ mkdir ${repositoryPath}/.vc
 # openSSL documentation was used in the following line
 initialCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${initialCommitFolder}
-cp -r ${repositoryPath}/* ${repositoryPath}/.vc/${initialCommitFolder}
+mv ${repositoryPath}/* ${repositoryPath}/.vc/${initialCommitFolder}
 
 touch ${repositoryPath}/.vc/.changes-log.txt
 echo "${initialCommitFolder};Initial-commit" >> ${repositoryPath}/.vc/.changes-log.txt
