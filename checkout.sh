@@ -9,6 +9,8 @@ echo "Grabbing from repo..."
 repositoryPath=$1
 fileNameToCheckOut=$2
 
+touch ${repositoryPath}/.vc/.currently-checked-out-files.txt
+
 if ! [ -d "$repositoryPath" ]
 then
     echo "The repository has an invalid path"
@@ -18,15 +20,15 @@ elif ! [ -z "$fileToCheckIn" ]
 then
     echo "No file provided"
     exit 1
-fi
-
-touch ${repositoryPath}/.vc/.currently-checked-out-files.txt
 # TODO: what if a file is identical to an UID?
-if ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
+elif ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
 then
     echo "There is already a checked-out file. Check-in the file before checking-out another one"
     exit 1
 fi
+
+
+
 
 # get last commit folder
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
