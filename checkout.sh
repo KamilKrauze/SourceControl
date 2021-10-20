@@ -13,9 +13,18 @@ if ! [ -d "$repositoryPath" ]
 then
     echo "The repository has an invalid path"
     exit 1
+#TODO: shouldnt it be fileNameToCheckOut?
 elif ! [ -z "$fileToCheckIn" ]
 then
     echo "No file provided"
+    exit 1
+fi
+
+touch ${repositoryPath}/.vc/.currently-checked-out-files.txt
+# TODO: what if a file is identical to an UID?
+if ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
+then
+    echo "There is already a checked-out file. Check-in the file before checking-out another one"
     exit 1
 fi
 
@@ -33,5 +42,4 @@ echo $fileToCheckOut
 # https://unix.stackexchange.com/questions/94714/cp-l-vs-cp-h
 cp -l $fileToCheckOut ${repositoryPath}
 
-touch ${repositoryPath}/.vc/.currently-checked-out-files.txt
 echo "${fileNameToCheckOut};$UID" >> ${repositoryPath}/.vc/.currently-checked-out-files.txt

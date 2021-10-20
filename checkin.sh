@@ -30,5 +30,6 @@ mv ${fileToCheckIn} $_
 echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt
 
 # remove the file from the list of currently checked-out files
+# TODO: make it only match whole word
 grep -vE "($UID)" ${repositoryPath}/.vc/.currently-checked-out-files.txt > ${repositoryPath}/.vc/.temp.txt
 mv ${repositoryPath}/.vc/.temp.txt ${repositoryPath}/.vc/.currently-checked-out-files.txt
