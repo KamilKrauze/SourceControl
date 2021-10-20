@@ -23,23 +23,25 @@ do
 			echo "Help me!" #Run help script
 			./help.sh ${inputArr[@]:1}
 		;;
-		"makerepo")
+		"createrepo")
 			echo "Create new repo" #Runs Create repo script
+			./createrepo.sh ${inputArr[@]:1}
 			;;
 		"openrepo")
 			echo "Opens repo" #Runs open repo script
+			./openrepo.sh ${inputArr[@]:1}
 			;;
 		"addfiles")
 			echo "Files have been added" #Add file script
 			#"${inputArr[@]:1}" #Get every element within the array except the first - https://stackoverflow.com/questions/6287419/getting-all-elements-of-a-bash-array-except-the-first - Date Visited: 19.10.2021
 			;;
 		"checkin")
-			canCheckin=false
-			export canCheckin
-			export canCheckout
+			#canCheckin=false
+			#export canCheckin
+			#export canCheckout
 
 			echo "Pushing to repo..." #Runs check in script
-			./checkin.sh
+			./checkin.sh ${inputArr[@]:1}
 			;;
 
 		"checkout")
