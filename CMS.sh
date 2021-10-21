@@ -57,7 +57,15 @@ do
 			;;
 	
 		"quit")
-			echo -e "Quiting..." #Quits the script
+			echo -n "Quiting" #Quits the script
+			echo -n "."
+			sleep 0.333
+			echo -n "."
+			sleep 0.333
+			echo -n "."
+			sleep 0.333
+			clear
+			exit
 			;;
 	
 		*)
