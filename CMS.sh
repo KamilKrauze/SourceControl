@@ -18,7 +18,27 @@ inputArr=($userIn) #Separate strings if there is a space between them and pass i
 
 while [ "${inputArr[0]}" != "quit" ]
 do
-	read -p ">" userIn
+	#TODO: probably copy to a function/file
+	if [ -s currently-open-repo.txt ]
+	then
+		currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
+		currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
+		echo " CMS.sh: You are currently working in repository: $currentlyOpenedRepoName (PATH: $currentlyOpenedRepoPath)"
+
+		currentlyCheckedOutFile=$(grep $UID ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt | cut -d ';' -f1)
+		if ! [ -z $currentlyCheckedOutFile ]
+		then
+			echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
+		else
+			echo " CMS.sh: You have no currently checked-out file"
+		fi
+	else
+		echo " CMS.sh: There is no repo that is currently opened"
+	fi
+
+	read -e -p ">" userIn
+	# method of enabling history copied from https://stackoverflow.com/questions/30068081/how-to-use-up-arrow-key-in-shell-script-to-get-previous-command
+	history -s "$userIn"
 	inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
 	case ${inputArr[0]} in
@@ -28,11 +48,17 @@ do
 		;;
 		"createrepo")
 			echo "Create new repo" #Runs Create repo script
+			# requires [path] [name]
 			./createrepo.sh ${inputArr[@]:1}
 			;;
 		"openrepo")
 			echo "Opens repo" #Runs open repo script
+			# requires [name], must be in repository-index.txt
 			./openrepo.sh ${inputArr[@]:1}
+			;;
+		"exitrepo")
+			echo "Exiting current repo"
+			./exitrepo.sh
 			;;
 		"addfiles")
 			echo "Files have been added" #Add file script
@@ -44,7 +70,8 @@ do
 			#export canCheckout
 
 			echo "Pushing to repo..." #Runs check in script
-			./checkin.sh ${inputArr[@]:1}
+			# requires [pathOfRepo] [filename], pathOfRepo is automatically provided
+			./checkin.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			;;
 
 		"checkout")
@@ -53,7 +80,8 @@ do
 			export canCheckout
 
 			echo "Pulling from repo..." #Runs check out script
-			./checkout.sh ${inputArr[@]:1}
+			# requires [pathOfRepo] [filename], pathOfRepo is automatically provided
+			./checkout.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			;;
 	
 		"quit")
