@@ -12,11 +12,13 @@ function page(){
 
 function commandList()
 {
-	echo -e "- ${BLUE}makerepo${NC} ${CYAN}<repoName>${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<workingDirectory>${NC}\n - Creates a repository with a user specified name, the repository's location and working directory is specified by the user."
+	echo -e "- ${BLUE}makerepo${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<repoName>${NC}\n - Creates a repository with the user specified name. Or if the directory already exists then it links it to the repository."
 	echo -e "\n- ${BLUE}openrepo${NC} ${CYAN}<repoName>${NC} - Opens a repository, by specfying the repository's name."
-	echo -e "\n- ${BLUE}addfiles${NC} ${CYAN}<filePath>${NC} - Adds file to the working directory's repository."
-	echo -e "\n- ${BLUE}checkin${NC} - Checks in the working directory's files to the repository and updates if files have been modified."
-	echo -e "\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC}- Replaces the current files within the working directory from the repo."
+	echo -e "\n- ${BLUE}addfiles${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Adds file to the specified repository from the working directory."
+	echo -e "\n- ${BLUE}checkin${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Checks in the working directory's files to the repository and updates if files have been modified."
+	echo -e "\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Replaces the current files within the working directory from the repo."
+	echo -e "\n- ${BLUE}backup${NC} ${CYAN}<repoName>${NC} - Creates a back up of the specified repository's working directory."
+	echo -e "\n- ${BLUE}editfile${NC} ${CYAN}<file(s)>${NC} - Gives the ability to edit the file within the terminal."
 }
 
 arr=($@)
