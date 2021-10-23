@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#argument is just the filename
-backupEdit () {
+#$1 is the repositoryPath and $2 is the fileNameToCheckOut from checkout.sh
+backupCheckOut () {
   #checking if there is a backups folder
   if [ -d backup ]
   then
@@ -9,11 +9,11 @@ backupEdit () {
   else
     mkdir backup
   fi
-  cp $1 backup
-  
+#  STRUGGLING TO MAKE THE CONDITION FOR THE WHILE
+# I'm using the repositoryPath and fileNameToCheckOut from checkout.sh
+#  while [  ]
+#  do
+#    sleep 5
+#    cp "$2" backup
+#  done
 }
-
-edit () {
-  nano $1
-}
-
