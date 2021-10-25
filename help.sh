@@ -13,19 +13,22 @@ function page(){
 function commandList()
 {
 	case $1 in
-		1)
+		"1")
 	echo -e "- ${BLUE}makerepo${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<repoName>${NC}\n - Creates a repository with the user specified name. Or if the directory already exists then it links it to the repository."
 	echo -e "\n- ${BLUE}openrepo${NC} ${CYAN}<repoName>${NC} - Opens a repository, by specfying the repository's name."
 	echo -e "\n- ${BLUE}addfiles${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Adds file to the specified repository from the working directory."
 	echo -e "\n- ${BLUE}checkin${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Checks in the working directory's files to the repository and updates if files have been modified."
 	echo -e "\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Replaces the current files within the working directory from the repo."
 	;;
-		2)
+		"2")
 	echo -e "\n- ${BLUE}backup${NC} ${CYAN}<repoName>${NC} - Creates a back up of the specified repository's working directory."
 	echo -e "\n- ${BLUE}editfile${NC} ${CYAN}<file(s)>${NC} - Gives the ability to edit the file within the terminal."
+	echo -e "\n- ${BLUE}deleterepo${NC} ${CYAN}<repoName>${NC} - Deletes the repository link from the specified directory and from the repository index, also copying the most recent commit to the working directory."
 	;;
 		*)
 	echo -e "${RED}ERROR: Page number input does not exist enter anything between 1-2${NC}"
+	;;
+esac
 }
 
 arr=($@)
