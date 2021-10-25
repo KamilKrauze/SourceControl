@@ -13,7 +13,17 @@ function checkIfRepoExists()
 	then
 		echo -e "\n\t${RED}- Repository name does not exist.\n\t- Please enter a repository that exists${NC}"
 	else
-		echo "Deleting repo"
+		echo "Deleting repo..."
+		repositoryPath=$(grep -w $1 repository-index.txt | cut -d ';' -f2)
+		lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
+		
+		if [ "$(ls -A ${repositoryPath}/.vc/${lastCommitFolder})" ] 
+		then
+			cp -l -r ${repositoryPath}/.vc/${lastCommitFolder}/* ${repositoryPath}
+		fi
+		rm -d -r ${repositoryPath}/.vc
+		grep -v -w $1 repository-index.txt > temp.txt
+		mv temp.txt repository-index.txt
 	fi
 }
 
