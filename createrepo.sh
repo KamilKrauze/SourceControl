@@ -3,11 +3,9 @@ repositoryName=$2
 
 touch repository-index.txt
 
-if ! [ -d "$repositoryPath" ]
-then
-    echo "Invalid directory path provided"
-    exit 1
-elif [ -z "$repositoryName" ]
+
+
+if [ -z "$repositoryName" ]
 then
     echo "Invalid repository name provided"
     exit 1
@@ -21,12 +19,21 @@ then
     exit 1
 fi
 
-mkdir ${repositoryPath}/.vc
+if ! [ -d "$repositoryPath" ]
+then
+    mkdir ${repositoryPath}
+    mkdir ${repositoryPath}/.vc
+else
+    mkdir ${repositoryPath}/.vc
+fi
 
 # openSSL documentation was used in the following line
 initialCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${initialCommitFolder}
-mv ${repositoryPath}/* ${repositoryPath}/.vc/${initialCommitFolder}
+
+if ! [ "$(ls -A $repositoryPath)" ]; then #Check if directory path is empty - https://www.codexpedia.com/shell/check-if-a-directory-is-empty-or-not-in-shell-script/ - 25.10.2021
+    mv ${repositoryPath}/* ${repositoryPath}/.vc/${initialCommitFolder}
+fi
 
 touch ${repositoryPath}/.vc/.changes-log.txt
 echo "${initialCommitFolder};Initial-commit" >> ${repositoryPath}/.vc/.changes-log.txt
