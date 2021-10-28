@@ -26,6 +26,7 @@ then
 	if ! [ -z $currentlyCheckedOutFile ]
 	then
 		echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
+		echo -e " Use the ${CYAN}'checkin'${NC} command to checkin your files so you can checkout from another repository."
 	else
 		echo " CMS.sh: You have no currently checked-out file"
 	fi
