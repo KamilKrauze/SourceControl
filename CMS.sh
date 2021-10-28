@@ -16,10 +16,7 @@ echo -e "Enter ${CYAN}'quit'${NC} to exit CMS.\n\n"
 userIn="."
 inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
-while [ "${inputArr[0]}" != "quit" ]
-do
-	#TODO: probably copy to a function/file
-	if [ -s currently-open-repo.txt ]
+if [ -s currently-open-repo.txt ]
 	then
 		currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
 		currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
@@ -35,6 +32,9 @@ do
 	else
 		echo " CMS.sh: There is no repo that is currently opened"
 	fi
+
+while [ "${inputArr[0]}" != "quit" ]
+do
 
 	read -e -p ">" userIn
 	# method of enabling history copied from https://stackoverflow.com/questions/30068081/how-to-use-up-arrow-key-in-shell-script-to-get-previous-command
