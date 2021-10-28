@@ -17,21 +17,21 @@ userIn="."
 inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
 if [ -s currently-open-repo.txt ]
-	then
-		currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
-		currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
-		echo " CMS.sh: You are currently working in repository: $currentlyOpenedRepoName (PATH: $currentlyOpenedRepoPath)"
+then
+	currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
+	currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
+	echo " CMS.sh: You are currently working in repository: $currentlyOpenedRepoName (PATH: $currentlyOpenedRepoPath)"
 
-		currentlyCheckedOutFile=$(grep $UID ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt | cut -d ';' -f1)
-		if ! [ -z $currentlyCheckedOutFile ]
-		then
-			echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
-		else
-			echo " CMS.sh: You have no currently checked-out file"
-		fi
+	currentlyCheckedOutFile=$(grep $UID ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt | cut -d ';' -f1)
+	if ! [ -z $currentlyCheckedOutFile ]
+	then
+		echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
 	else
-		echo " CMS.sh: There is no repo that is currently opened"
+		echo " CMS.sh: You have no currently checked-out file"
 	fi
+else
+	echo " CMS.sh: There is no repo that is currently opened"
+fi
 
 while [ "${inputArr[0]}" != "quit" ]
 do
