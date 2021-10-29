@@ -17,6 +17,17 @@ fi
 
 read -e -p "Commit Name: " nameOfCommit
 
+# check all provided files are files that exist in the working directory
+for file in ${arr[@]:1};
+do
+    fileToCheckIn=$repositoryPath/$file
+    if ! [ -f "$fileToCheckIn" ]
+    then
+        echo "File $fileToCheckIn does not exist. No files have been committed."
+        exit 1
+    fi
+done
+
 # get last commit folder
 # NB: the log file must be a hidden file so it doesnt show up here
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
@@ -31,13 +42,7 @@ ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./${repositoryPath}/.vc/${n
 
 for file in ${arr[@]:1};
 do
-    fileToCheckIn=$repositoryPath/$file
-    if [ -f "$fileToCheckIn" ]
-    then
-       mv -f ${fileToCheckIn} ./${repositoryPath}/.vc/${newCommitFolder}
-    else
-        echo "File $fileToCheckIn does not exist"
-    fi
+    mv -f $repositoryPath/$file ./${repositoryPath}/.vc/${newCommitFolder}
 done
 
 echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt
