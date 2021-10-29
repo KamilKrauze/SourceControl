@@ -1,4 +1,5 @@
 #!/bin/bash
+chmod u+x *.sh
 #Create variables that give text color - https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux - Date Visted: 19.10.2021
 export RED="\033[0;31m"
 export BLUE="\033[0;34m"
