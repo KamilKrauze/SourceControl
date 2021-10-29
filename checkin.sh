@@ -46,8 +46,6 @@ cd ${repositoryPath}/.vc/${newCommitFolder}
 ln -s ../${lastCommitFolder}/* .
 cd "$currentShellPath"
 
-#todo: more advanced validation, if one file is provided and doesnt exist, it still creates a commit
-
 for file in ${arr[@]:1};
 do
     # copy the checked-in files separately so they are not a soft link
