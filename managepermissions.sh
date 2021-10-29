@@ -40,6 +40,10 @@ function readAndCheckUsername {
     then
         echo "There is no existing user with that username"
         exit 1
+    elif [ "$userIdToModify" = "$UID" ]
+    then
+        echo "You cannot modify your own permissions"
+        exit 1
     fi
 }
 
