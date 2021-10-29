@@ -29,7 +29,7 @@ do
     fileToCheckIn=$repositoryPath/$file
     if [ -f "$fileToCheckIn" ]
     then
-       mv ${fileToCheckIn} $_ 
+       mv -f ${fileToCheckIn} $_ 
     fi
 done
 
