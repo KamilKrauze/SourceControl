@@ -3,6 +3,15 @@ repositoryPath=$1
 #todo: maybe if a user has checked out files, prevent them from doing rollback
 # what if another user a checked out file?
 
+# check user permissions
+repoDetails=$(grep -w $repositoryPath repository-index.txt)
+usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
+if ! echo $usersWithWriteAccess | grep -q $UID
+then
+    echo "You don't have the permission to rollback files in this repository (no WRITE access)"
+    exit 1  
+fi
+
 echo "Listing out the changes made in the repository:"
 echo
 

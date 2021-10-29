@@ -16,6 +16,14 @@ function checkIfRepoExists()
 		echo "Deleting repo..."
 		repositoryPath=$(grep -w $1 repository-index.txt | cut -d ';' -f2)
 		lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
+
+		repoDetails=$(grep -w $repositoryPath repository-index.txt)
+		usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
+		if ! echo $usersWithWriteAccess | grep -q $UID
+		then
+    		echo "You don't have the permission to delete this repository (no WRITE access)"
+    		exit 1  
+		fi
 		
 		if [ "$(ls -A ${repositoryPath}/.vc/${lastCommitFolder})" ] 
 		then
