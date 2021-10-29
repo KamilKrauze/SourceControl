@@ -82,6 +82,10 @@ do
 			./checkout.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			;;
 
+		"editfile")
+			./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+			;;
+
 		"rollback")
 			./rollback.sh $currentlyOpenedRepoPath
 			;;
