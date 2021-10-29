@@ -89,6 +89,10 @@ do
 			      ./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			  ;;
         
+         "addfile")
+            ./addfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+        ;;
+        
         "quit")
             echo -n "Quiting" #Quits the script
             echo -n "."
