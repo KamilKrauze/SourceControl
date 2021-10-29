@@ -71,20 +71,12 @@ do
 			#"${inputArr[@]:1}" #Get every element within the array except the first - https://stackoverflow.com/questions/6287419/getting-all-elements-of-a-bash-array-except-the-first - Date Visited: 19.10.2021
 			;;
 		"checkin")
-			#canCheckin=false
-			#export canCheckin
-			#export canCheckout
-
 			echo "Pushing to repo..." #Runs check in script
 			# requires [pathOfRepo] [filename], pathOfRepo is automatically provided
 			./checkin.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			;;
 
 		"checkout")
-			canCheckout=false
-			export canCheckin
-			export canCheckout
-
 			echo "Pulling from repo..." #Runs check out script
 			# requires [pathOfRepo] [filename], pathOfRepo is automatically provided
 			./checkout.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
