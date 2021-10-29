@@ -42,6 +42,8 @@ echo $fileToCheckOut
 #fi
 
 # https://unix.stackexchange.com/questions/94714/cp-l-vs-cp-h
-cp -l $fileToCheckOut ${repositoryPath}
+cp -L $fileToCheckOut ${repositoryPath}
 
 echo "${fileNameToCheckOut};$UID" >> ${repositoryPath}/.vc/.currently-checked-out-files.txt
+
+./editfile.sh $repositoryPath $fileNameToCheckOut &

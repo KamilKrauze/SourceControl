@@ -23,11 +23,12 @@ then
 	currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
 	echo " CMS.sh: You are currently working in repository: $currentlyOpenedRepoName (PATH: $currentlyOpenedRepoPath)"
 
+  touch ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt
 	currentlyCheckedOutFile=$(grep $UID ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt | cut -d ';' -f1)
 	if ! [ -z $currentlyCheckedOutFile ]
 	then
 		echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
-		echo -e "Use the ${CYAN}'checkin'${NC} command to checkin your files so you can checkout from another repository.\N"
+		echo -e "Use the ${CYAN}'checkin'${NC} command to checkin your files so you can checkout another file.\n"
 	else
 		echo -e "${BLUE}$0${NC}: You have no currently checked-out file.\n"
 	fi
@@ -87,6 +88,10 @@ do
 			echo "Pulling from repo..." #Runs check out script
 			# requires [pathOfRepo] [filename], pathOfRepo is automatically provided
 			./checkout.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+			;;
+
+		"rollback")
+			./rollback.sh $currentlyOpenedRepoPath
 			;;
 	
 		"quit")
