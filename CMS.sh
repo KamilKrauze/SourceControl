@@ -85,6 +85,10 @@ do
         "rollback")
             ./rollback.sh $currentlyOpenedRepoPath
         ;;
+
+        "managepermissions")
+            ./managepermissions.sh $currentlyOpenedRepoPath
+        ;;
         
         "quit")
             echo -n "Quiting" #Quits the script

@@ -44,4 +44,4 @@ fi
 touch ${repositoryPath}/.vc/.changes-log.txt
 echo "${initialCommitFolder};Initial-commit" >> ${repositoryPath}/.vc/.changes-log.txt
 
-echo "${repositoryName};${repositoryPath}" >> repository-index.txt
+echo "${repositoryName};${repositoryPath};$UID;$UID" >> repository-index.txt
