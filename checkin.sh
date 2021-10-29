@@ -34,14 +34,23 @@ lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 
 newCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${newCommitFolder}
+
+# TODO: delete this when ready
 # create soft link to all files from last commit folder, relative to the path of the original file
-ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./${repositoryPath}/.vc/${newCommitFolder}
-# copy the checked-in file separately so it is not a soft link
+# ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./${repositoryPath}/.vc/${newCommitFolder}
+
+# since soft links are relative paths, the script first need to switch directories
+# ln --relative option exists, but seems to be unsupported on some systems
+currentShellPath=$(pwd)
+cd ${repositoryPath}/.vc/${newCommitFolder}
+ln -s ../${lastCommitFolder}/* .
+cd "$currentShellPath"
 
 #todo: more advanced validation, if one file is provided and doesnt exist, it still creates a commit
 
 for file in ${arr[@]:1};
 do
+    # copy the checked-in files separately so they are not a soft link
     mv -f $repositoryPath/$file ./${repositoryPath}/.vc/${newCommitFolder}
 done
 
