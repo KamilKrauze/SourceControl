@@ -27,12 +27,12 @@ then
 	if ! [ -z $currentlyCheckedOutFile ]
 	then
 		echo " CMS.sh: You have a checked-out file in $currentlyOpenedRepoName: $currentlyCheckedOutFile"
-		echo -e " Use the ${CYAN}'checkin'${NC} command to checkin your files so you can checkout from another repository."
+		echo -e "Use the ${CYAN}'checkin'${NC} command to checkin your files so you can checkout from another repository.\N"
 	else
-		echo " CMS.sh: You have no currently checked-out file"
+		echo -e "${BLUE}$0${NC}: You have no currently checked-out file.\n"
 	fi
 else
-	echo " CMS.sh: There is no repo that is currently opened"
+	echo -e "${BLUE}$0${NC}: There is no repo that is currently opened.\n"
 fi
 
 while [ "${inputArr[0]}" != "quit" ]
@@ -49,9 +49,12 @@ do
 			./help.sh ${inputArr[@]:1}
 		;;
 		"createrepo")
-			echo "Create new repo" #Runs Create repo script
 			# requires [path] [name]
 			./createrepo.sh ${inputArr[@]:1}
+			;;
+		"deleterepo")
+			# requries <repoName>
+			./deleterepo.sh ${inputArr[@]:1}
 			;;
 		"openrepo")
 			echo "Opens repo" #Runs open repo script
