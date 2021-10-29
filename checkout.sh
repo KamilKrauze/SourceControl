@@ -1,10 +1,4 @@
 #!/bin/bash
-# env | grep canCheckin
-# env | grep canCheckout
-
-# echo $canCheckin
-# echo $canCheckout
-echo "Grabbing from repo..."
 
 repositoryPath=$1
 fileNameToCheckOut=$2
@@ -15,8 +9,7 @@ if ! [ -d "$repositoryPath" ]
 then
     echo "The repository has an invalid path"
     exit 1
-#TODO: shouldnt it be fileNameToCheckOut?
-elif ! [ -z "$fileToCheckIn" ]
+elif [ -z "$fileNameToCheckOut" ]
 then
     echo "No file provided"
     exit 1
@@ -28,18 +21,16 @@ then
 fi
 
 
-
-
 # get last commit folder
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 # find file in last commit folder
 fileToCheckOut="${repositoryPath}/.vc/$lastCommitFolder/$fileNameToCheckOut"
 echo $fileToCheckOut
-#if ! [ -e "$fileToCheckOut" ]
-#then
-#    echo "File to checkout does not exist"
-#    exit 1
-#fi
+if ! [ -e "$fileToCheckOut" ]
+then
+   echo "File to checkout does not exist"
+   exit 1
+fi
 
 # https://unix.stackexchange.com/questions/94714/cp-l-vs-cp-h
 cp -L $fileToCheckOut ${repositoryPath}

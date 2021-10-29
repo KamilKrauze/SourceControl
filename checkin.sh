@@ -1,8 +1,11 @@
 #!/bin/bash
 
-#TO-DO: make the file available to other users to edit
-
 arr=($@)
+
+if ! [ "$#" -ge 2 ]; then
+    echo "Not enough arguments provided"
+    exit 1
+fi
 
 repositoryPath=${arr[0]}
 
@@ -21,15 +24,19 @@ lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 newCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${newCommitFolder}
 # create soft link to all files from last commit folder, relative to the path of the original file
-ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./testRepo/.vc/${newCommitFolder}
+ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./${repositoryPath}/.vc/${newCommitFolder}
 # copy the checked-in file separately so it is not a soft link
+
+#todo: more advanced validation, if one file is provided and doesnt exist, it still creates a commit
 
 for file in ${arr[@]:1};
 do
     fileToCheckIn=$repositoryPath/$file
     if [ -f "$fileToCheckIn" ]
     then
-       mv -f ${fileToCheckIn} $_ 
+       mv -f ${fileToCheckIn} ./${repositoryPath}/.vc/${newCommitFolder}
+    else
+        echo "File $fileToCheckIn does not exist"
     fi
 done
 

@@ -22,7 +22,9 @@ for directory in $repositoryPath/.vc/* ; do
         userComment="[none]"
     fi
 
-    echo "Name of change: $directoryBasename User comment: $userComment Files modified: $filesModified"
+# todo finish formatting
+    #echo "Name of change: $directoryBasename User comment: $userComment Files modified: $filesModified"
+    printf "Name of change: %-10s User comment: %-20s Files modified: %s\n" $directoryBasename $userComment "$filesModified"
 done
 
 echo
