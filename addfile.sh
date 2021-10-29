@@ -3,9 +3,15 @@
 repositoryPath=$1
 filenameToAdd=$2
 
+if [ -z "$filenameToAdd" ]
+then
+    echo "Provided filename is empty"
+    exit 1
+fi
+
 # get last commit folder
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
-fileWithSameNameInLastCommitFolder=$(ls "$lastCommitFolder" | grep -w "$filenameToAdd")
+fileWithSameNameInLastCommitFolder=$(ls "${repositoryPath}/.vc/$lastCommitFolder" | grep -w "$filenameToAdd")
 
 if ! [ -z "$fileWithSameNameInLastCommitFolder" ]
 then
@@ -14,13 +20,13 @@ then
 fi
 
 # TODO: what if a file is identical to an UID?
-elif ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
+if ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
 then
     echo "There is already a checked-out file. Check-in that file before adding a new file"
     exit 1
 fi
 
-touch $filenameToAdd
+touch ${repositoryPath}/$filenameToAdd
 
 echo "New file $filenameToAdd created in the working directory. Use checkin to check it in the version control system"
 
@@ -28,4 +34,4 @@ echo "New file $filenameToAdd created in the working directory. Use checkin to c
 echo "${filenameToAdd};$UID" >> ${repositoryPath}/.vc/.currently-checked-out-files.txt
 
 # start backup process on the file
-./editfile.sh $repositoryPath $fileNameToCheckOut &
+./backup-checkedout-file.sh $repositoryPath $filenameToAdd &

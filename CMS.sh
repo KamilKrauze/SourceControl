@@ -85,7 +85,11 @@ do
         "rollback")
             ./rollback.sh $currentlyOpenedRepoPath
         ;;
-        
+
+        "addfile")
+            ./addfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+        ;;
+
         "quit")
             echo -n "Quiting" #Quits the script
             echo -n "."
