@@ -2,19 +2,17 @@
 
 #TO-DO: make the file available to other users to edit
 
-repositoryPath=$1
-fileToCheckIn=$repositoryPath/$2
-nameOfCommit=$3
+arr=($@)
+
+repositoryPath=${arr[0]}
 
 if ! [ -d "$repositoryPath" ]
 then
     echo "The repository has an invalid path"
     exit 1
-elif ! [ -f "$fileToCheckIn" ]
-then
-    echo "No file provided or file does not exist"
-    exit 1
 fi
+
+read -e -p "Commit Name: " nameOfCommit
 
 # get last commit folder
 # NB: the log file must be a hidden file so it doesnt show up here
@@ -25,7 +23,15 @@ mkdir ${repositoryPath}/.vc/${newCommitFolder}
 # create soft link to all files from last commit folder, relative to the path of the original file
 ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./testRepo/.vc/${newCommitFolder}
 # copy the checked-in file separately so it is not a soft link
-mv -f ${fileToCheckIn} $_
+
+for file in ${arr[@]:1};
+do
+    fileToCheckIn=$repositoryPath/$file
+    if [ -f "$fileToCheckIn" ]
+    then
+       mv -f ${fileToCheckIn} $_ 
+    fi
+done
 
 echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt
 

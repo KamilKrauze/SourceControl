@@ -45,3 +45,5 @@ echo $fileToCheckOut
 cp -L $fileToCheckOut ${repositoryPath}
 
 echo "${fileNameToCheckOut};$UID" >> ${repositoryPath}/.vc/.currently-checked-out-files.txt
+
+./editfile.sh $repositoryPath $fileNameToCheckOut &
