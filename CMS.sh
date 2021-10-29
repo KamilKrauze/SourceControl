@@ -19,7 +19,6 @@ inputArr=($userIn) #Separate strings if there is a space between them and pass i
 
 while [ "${inputArr[0]}" != "quit" ]
 do
-
     if [ -s currently-open-repo.txt ]
     then
         currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
@@ -85,11 +84,15 @@ do
         "rollback")
             ./rollback.sh $currentlyOpenedRepoPath
         ;;
-
-        "addfile")
+        
+        "editfile")
+			      ./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+			  ;;
+        
+         "addfile")
             ./addfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
         ;;
-
+        
         "quit")
             echo -n "Quiting" #Quits the script
             echo -n "."
