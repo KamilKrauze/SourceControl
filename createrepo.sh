@@ -36,14 +36,12 @@ fi
 initialCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${initialCommitFolder}
 
-# breaks behavious when it's not empty
+# todo breaks behavious when it's not empty
 # if ! [ "$(ls -A $repositoryPath)" ]; then #Check if directory path is empty - https://www.codexpedia.com/shell/check-if-a-directory-is-empty-or-not-in-shell-script/ - 25.10.2021
      mv ${repositoryPath}/* ${repositoryPath}/.vc/${initialCommitFolder}
 # fi
 
 touch ${repositoryPath}/.vc/.changes-log.txt
-#colors dont get saved in files
-# echo "${initialCommitFolder};${BLUE}Initial-commit${NC}" >> ${repositoryPath}/.vc/.changes-log.txt
 echo "${initialCommitFolder};Initial-commit" >> ${repositoryPath}/.vc/.changes-log.txt
 
 echo "${repositoryName};${repositoryPath}" >> repository-index.txt

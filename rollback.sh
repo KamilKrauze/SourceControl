@@ -26,6 +26,8 @@ for directory in $repositoryPath/.vc/* ; do
 done
 
 echo
+# todo switch to a select menu
+# add option to just see diff
 read -p "Which change do you want to revert to?" changeToRevertTo
 
 # todo: this could be more robust
