@@ -3,7 +3,7 @@ repositoryPath=$1
 checkedOutFileName=$2
 checkedOutFile=$repositoryPath/$checkedOutFileName
 
-backupFolder=${repositoryPath}/.vc/.BackupFolder
+backupFolder=${repositoryPath}/.vc/.tempBackupFolder
 
 #checks if the backup folder exists
 if ! [ -d $backupFolder ]
@@ -25,15 +25,22 @@ while ! [ -z $(grep $checkedOutFileName ${repositoryPath}/.vc/.currently-checked
 do
   #todo: how to increase to 60? Maybe have the file name inside the backup folder name
   #sleeps every 1s because the folder will delete itself after 60 seconds even if something else has been checked in during that time
-  sleep 1
+  sleep 60
 
-  #https://stackoverflow.com/questions/3611846/bash-using-the-result-of-a-diff-in-a-if-statement
-  DIFF=$(diff -q $checkedOutFile $backupFolder/$checkedOutFileName)
-
-  # fixed "too many arguments" error with help of https://stackoverflow.com/questions/13781216/meaning-of-too-many-arguments-error-from-if-square-brackets/13781217#13781217
-  if ! [ -z "$DIFF" ]
+  #checks if the file exists still (in case user accidentally deletes it)
+  if [ -f $checkedOutFile ]
   then
-    cp $checkedOutFile $backupFolder
+    #https://stackoverflow.com/questions/3611846/bash-using-the-result-of-a-diff-in-a-if-statement
+    DIFF=$(diff -q $checkedOutFile $backupFolder/$checkedOutFileName)
+
+    # fixed "too many arguments" error with help of https://stackoverflow.com/questions/13781216/meaning-of-too-many-arguments-error-from-if-square-brackets/13781217#13781217
+    if ! [ -z "$DIFF" ]
+    then
+      cp $checkedOutFile $backupFolder
+    fi
+  #if the file doesn't exist then it will automatically put it back in the working repository
+  else
+    cp $backupFolder/$checkedOutFileName $repositoryPath 
   fi
 done
 }
@@ -41,4 +48,4 @@ done
 backupCheckOut
 
 #removes the function once the while loop is finished
-rm -r $backupFolder
+rm -r $backupFolder/$checkedOutFileName
