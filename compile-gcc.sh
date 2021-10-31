@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc --version >/dev/null
+gcc --version >/dev/null 2>&1 # Command output suppression - \( ! -wholename $repositoryPath/.vc \)
 if ! [ $? -eq 0 ]; then
 	echo -e "GCC compiler not installed on this system. Please install to use this feature."
 	exit

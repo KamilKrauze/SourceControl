@@ -1,6 +1,6 @@
 #!/bin/bash
 
-javac --version >/dev/null
+javac --version >/dev/null 2>&1 # Command output suppression - \( ! -wholename $repositoryPath/.vc \)
 if ! [ $? -eq 0 ]; then
 	echo -e "JavaC compiler not installed on this system. Please install to use this feature."
 	exit 1;
