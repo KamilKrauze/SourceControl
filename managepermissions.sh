@@ -32,6 +32,13 @@ done
 echo "These users have READ access to the repository:$usernamesWithReadAccess"
 echo "These users have WRITE access to the repository:$usernamesWithWriteAccess"
 
+function readAndCheckGroup {
+    echo "All users in specified group will be given/removed permissions."
+    read -p "Type in the name of the group: " groupToModify
+
+    membersOfGroup=$(getent group $groupToModify) 
+}
+
 function readAndCheckUsername {
     read -p "Type in the username of the user: " usernameToModify 
     userIdToModify=$(id -u $usernameToModify 2> /dev/null) 
@@ -54,7 +61,7 @@ function addReadPermissions {
     
     # https://stackoverflow.com/questions/3685970/check-if-a-bash-array-contains-a-value
     if [[ " ${arrayOfUsersWithReadAccess[*]} " =~ " ${userIdToModify} " ]]; then
-        echo "That user already has read access"
+        echo "User $usernameToModify already has read access"
         return 1
     fi
 
@@ -74,7 +81,7 @@ function addWriteAndReadPermission {
 
     # https://stackoverflow.com/questions/3685970/check-if-a-bash-array-contains-a-value
     if [[ " ${arrayOfUsersWithWriteAccess[*]} " =~ " ${userIdToModify} " ]]; then
-        echo "That user already has write access"
+        echo "User $usernameToModify already has write access"
         return 1
     fi
 
@@ -99,7 +106,7 @@ function removeWritePermission {
 
     # https://stackoverflow.com/questions/3685970/check-if-a-bash-array-contains-a-value
     if [[ ! " ${arrayOfUsersWithWriteAccess[*]} " =~ " ${userIdToModify} " ]]; then
-        echo "That user does not has write access"
+        echo "User $usernameToModify does not has write access"
     return 1
     fi
 
@@ -124,7 +131,7 @@ function removeWriteAndReadPermission {
 
     # https://stackoverflow.com/questions/3685970/check-if-a-bash-array-contains-a-value
     if [[ ! " ${arrayOfUsersWithReadAccess[*]} " =~ " ${userIdToModify} " ]]; then
-        echo "That user does not have read access"
+        echo "User $usernameToModify does not have read access"
     return 1
     fi
 
