@@ -14,14 +14,15 @@ canCheckout=true
 echo -e "Enter ${CYAN}'help'${NC} to get a command list."
 echo -e "Enter ${CYAN}'quit'${NC} to exit CMS.\n\n"
 
-optionsWhenRepoIsNotOpen=( "Create a repository" "Open a repository" "Delete a repository" "Show help" "Quit")
-optionsWhenRepoIsOpenAndNoCheckedOutFile=( "Check-out a file" "Check-in files" "Edit a file (automatic check-out/in)" "Create a new file" "Rollback to an earlier version of repo" "Exit current repository" "Manage repo permissions" "Archive current repo" "Compile files in repo" "Show help" "Quit")
-optionsWhenRepoIsOpenAndAFileCheckedOut=( "Check-in files" "Exit current repository" "Show help" "Quit")
+optionsWhenRepoIsNotOpen=( "Create a repository" "Open a repository" "List existing repositories" "Delete a repository" "Show help" "Quit")
+optionsWhenRepoIsOpenAndNoCheckedOutFile=( "Check-out a file" "Check-in files" "Edit a file (automatic check-out/in)" "Create a new file" "List files in current repo" "Rollback to an earlier version of repo" "Exit current repository" "Manage repo permissions" "Archive current repo" "Compile files in repo" "Show help" "Quit")
+optionsWhenRepoIsOpenAndAFileCheckedOut=( "Check-in files" "List files in current repo" "Exit current repository" "Show help" "Quit")
 
 # userIn="."
 # inputArr=($userIn) #Separate strings if there is a space between them and pass into array - https://stackoverflow.com/questions/1469849/how-to-split-one-string-into-multiple-strings-separated-by-at-least-one-space-in - Date Visited: 19.10.2021
 
 function checkCurrentStateAndSetMenuOptions {
+    echo
     if [ -s currently-open-repo.txt ]
     then
         currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
@@ -60,6 +61,9 @@ do
         "Open a repository")
             ./openrepo.sh
         ;;
+        "List existing repositories")
+            ./list-repos.sh
+        ;;
         "Delete a repository")
             ./deleterepo.sh
         ;;
@@ -89,6 +93,9 @@ do
         ;;
         "Archive current repo")
             ./archive.sh $currentlyOpenedRepoPath
+        ;;
+        "List files in current repo")
+            ./listrepocontents.sh $currentlyOpenedRepoPath
         ;;
         "Quit")
             echo -n "Quiting" #Quits the script

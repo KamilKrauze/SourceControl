@@ -33,5 +33,5 @@ fi
 touch currently-open-repo.txt
 echo "$repositoryPath;$repositoryName" >> currently-open-repo.txt
 
-# get the repository path by command substitution in the main bash script
-echo $repositoryPath
+# list contents of current repository
+./listrepocontents.sh $repositoryPath
