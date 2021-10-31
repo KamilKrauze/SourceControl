@@ -85,8 +85,7 @@ do
 			./editfile.sh $currentlyOpenedRepoPath
 		;;
         "Compile files in repo")
-            # todo switch to menu based input inside script
-            ./compile.sh
+            ./compile.sh $currentlyOpenedRepoPath
         ;;
         "Quit")
             echo -n "Quiting" #Quits the script
