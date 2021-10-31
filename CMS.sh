@@ -1,5 +1,5 @@
 #!/bin/bash
-chmod u+x *.sh
+chmod 774 *.sh
 #Create variables that give text color - https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux - Date Visted: 19.10.2021
 export RED="\033[0;31m"
 export BLUE="\033[0;34m"
@@ -45,7 +45,7 @@ do
     
     case ${inputArr[0]} in
         "help")
-            echo "Help me!" #Run help script
+            # requires <page number>
             ./help.sh ${inputArr[@]:1}
         ;;
         "createrepo")
@@ -90,11 +90,14 @@ do
         ;;
         
         "editfile")
-			      ./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+			./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
 			  ;;
         
-         "addfile")
+        "addfile")
             ./addfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}
+        ;;
+        "compile")
+            ./compile.sh ${inputArr[@]:1}
         ;;
         
         "quit")
