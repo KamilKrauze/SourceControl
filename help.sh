@@ -15,19 +15,19 @@ function commandList()
 	case $1 in
 		"1")
 	printf "%s- ${BLUE}makerepo${NC} ${CYAN}<repoLocation>${NC} ${CYAN}<repoName>${NC} - Creates a repository with the user specified name. Or if the directory already exists then it links it to the repository." | fold -s
-	echo -e "%s\n- ${BLUE}openrepo${NC} ${CYAN}<repoName>${NC} - Opens a repository, by specfying the repository's name."
-	echo -e "%s\n- ${BLUE}addfiles${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Adds file to the specified repository from the working directory."
-	echo -e "%s\n- ${BLUE}checkin${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Checks in the working directory's files to the repository and updates if files have been modified."
-	echo -e "%s\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Replaces the current files within the working directory from the repo."
+	printf "%s\n- ${BLUE}openrepo${NC} ${CYAN}<repoName>${NC} - Opens a repository, by specfying the repository's name." | fold -s
+	printf "%s\n- ${BLUE}addfiles${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Adds file to the specified repository from the working directory." | fold -s
+	printf "%s\n- ${BLUE}checkin${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Checks in the working directory's files to the repository and updates if files have been modified." | fold -s
+	printf "%s\n- ${BLUE}checkout${NC} ${CYAN}<repoName>${NC} ${CYAN}<file(s)>${NC} - Replaces the current files within the working directory from the repo.\n\n" | fold -s
 	;;
 		"2")
-	echo -e "%s\n- ${BLUE}backup${NC} ${CYAN}<repoName>${NC} - Creates a back up of the specified repository's working directory."
-	echo -e "%s\n- ${BLUE}editfile${NC} ${CYAN}<file(s)>${NC} - Gives the ability to edit the file within the terminal."
-	echo -e "%s\n- ${BLUE}deleterepo${NC} ${CYAN}<repoName>${NC} - Deletes the repository link from the specified directory and from the repository index, also copying the most recent commit to the working directory."
-	echo -e "%s\n- ${BLUE}compile${NC} ${CYAN}<compiler>${NC} ${CYAN}<repoName>${NC} - Compiles the working directory, specified by the repository name and compiler. If the compiler is not installed on the system, the script will be interupted."
+	printf "%s\n- ${BLUE}backup${NC} ${CYAN}<repoName>${NC} - Creates a back up of the specified repository's working directory." | fold -s
+	printf "%s\n- ${BLUE}editfile${NC} ${CYAN}<file(s)>${NC} - Gives the ability to edit the file within the terminal." | fold -s
+	printf "%s\n- ${BLUE}deleterepo${NC} ${CYAN}<repoName>${NC} - Deletes the repository link from the specified directory and from the repository index, also copying the most recent commit to the working directory." | fold -s
+	printf "%s\n- ${BLUE}compile${NC} ${CYAN}<compiler>${NC} ${CYAN}<repoName>${NC} - Compiles the working directory, specified by the repository name and compiler. If the compiler is not installed on the system, the script will be interupted.\n\n" | fold -s
 	;;
 		*)
-	echo -e "%s${RED}ERROR: Page number input does not exist enter anything between 1-2${NC}"
+	printf "%s\n${RED}ERROR: Page number input does not exist enter anything between 1-2${NC}" | fold -s
 	;;
 esac
 }

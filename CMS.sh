@@ -45,7 +45,7 @@ do
     
     case ${inputArr[0]} in
         "help")
-            echo "Help me!" #Run help script
+            # requires <page number>
             ./help.sh ${inputArr[@]:1}
         ;;
         "createrepo")
