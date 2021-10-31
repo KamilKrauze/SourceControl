@@ -6,6 +6,7 @@ repoDetails=$(grep -w $repositoryPath repository-index.txt)
 repoNameAndPath=$(echo $repoDetails | cut -d ';' -f 1-2)
 usersWithReadAccess=$(echo $repoDetails | cut -d ';' -f3)
 usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
+existingPasswordHash=$(echo $repoDetails | cut -d ';' -f5)
 
 # https://stackoverflow.com/questions/918886/how-do-i-split-a-string-on-a-delimiter-in-bash
 arrayOfUsersWithReadAccess=(${usersWithReadAccess//-/ })
@@ -59,7 +60,7 @@ function addReadPermissions {
     fi
 
     usersWithReadAccess="$usersWithReadAccess-$userIdToModify"
-    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess"
+    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess;$existingPasswordHash"
 
     # update repository-index.txt with new permissions
     # https://linuxhint.com/replace_string_in_file_bash/
@@ -85,7 +86,7 @@ function addWriteAndReadPermission {
     fi
 
     usersWithWriteAccess="$usersWithWriteAccess-$userIdToModify"
-    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess"
+    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess;$existingPasswordHash"
     
     # update repository-index.txt with new permissions
     # https://linuxhint.com/replace_string_in_file_bash/
@@ -110,7 +111,7 @@ function removeWritePermission {
     userIdToRemoveWithDelimiter="$userIdToModify-"
     usersWithWriteAccess=$(echo "${usersWithWriteAccess/${userIdToRemoveWithDelimiter}/""}")
     
-    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess"
+    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess;$existingPasswordHash"
 
     # update repository-index.txt with new permissions
     # https://linuxhint.com/replace_string_in_file_bash/
@@ -148,7 +149,7 @@ function removeWriteAndReadPermission {
     usersWithReadAccess=$(echo "${usersWithReadAccess/${userIdToRemoveWithDelimiter}/""}")
     
     echo $usersWithReadAccess
-    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess"
+    newRepoDetails="$repoNameAndPath;$usersWithReadAccess;$usersWithWriteAccess;$existingPasswordHash"
 
     # update repository-index.txt with new permissions
     # https://linuxhint.com/replace_string_in_file_bash/

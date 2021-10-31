@@ -15,7 +15,7 @@ echo -e "Enter ${CYAN}'help'${NC} to get a command list."
 echo -e "Enter ${CYAN}'quit'${NC} to exit CMS.\n\n"
 
 optionsWhenRepoIsNotOpen=( "Create a repository" "Open a repository" "List existing repositories" "Delete a repository" "Show help" "Quit")
-optionsWhenRepoIsOpenAndNoCheckedOutFile=( "Check-out a file" "Check-in files" "Edit a file (automatic check-out/in)" "Create a new file" "List files in current repo" "Rollback to an earlier version of repo" "Exit current repository" "Manage repo permissions" "Archive current repo" "Compile files in repo" "Show help" "Quit")
+optionsWhenRepoIsOpenAndNoCheckedOutFile=( "Check-out a file" "Check-in files" "Edit a file (automatic check-out/in)" "Create a new file" "List files in current repo" "Rollback to an earlier version of repo" "Exit current repository" "Manage repo permissions" "Password protect repo from deletion" "Archive current repo" "Compile files in repo" "Show help" "Quit")
 optionsWhenRepoIsOpenAndAFileCheckedOut=( "Check-in files" "List files in current repo" "Exit current repository" "Show help" "Quit")
 
 # userIn="."
@@ -96,6 +96,9 @@ do
         ;;
         "List files in current repo")
             ./listrepocontents.sh $currentlyOpenedRepoPath
+        ;;
+        "Password protect repo from deletion")
+            ./passwordprotectrepo.sh $currentlyOpenedRepoPath
         ;;
         "Quit")
             echo -n "Quiting" #Quits the script
