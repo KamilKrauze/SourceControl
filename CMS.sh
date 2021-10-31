@@ -99,6 +99,9 @@ do
         "compile")
             ./compile.sh ${inputArr[@]:1}
         ;;
+        "list-repos")
+            bash ./lisrepos.sh
+        ;;
         
         "quit")
             echo -n "Quiting" #Quits the script
