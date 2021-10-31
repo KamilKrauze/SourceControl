@@ -20,6 +20,14 @@ then
     exit 1
 fi
 
+# check user permissions
+repoDetails=$(grep -w $repositoryPath repository-index.txt)
+usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
+if ! echo $usersWithWriteAccess | grep -q $UID
+then
+    echo "You don't have the permission to checkout files in this repository (no WRITE access)"
+    exit 1  
+fi
 
 # get last commit folder
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)

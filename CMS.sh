@@ -84,6 +84,10 @@ do
         "rollback")
             ./rollback.sh $currentlyOpenedRepoPath
         ;;
+
+        "managepermissions")
+            ./managepermissions.sh $currentlyOpenedRepoPath
+        ;;
         
         "editfile")
 			      ./editfile.sh $currentlyOpenedRepoPath ${inputArr[@]:1}

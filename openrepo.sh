@@ -20,6 +20,16 @@ then
     exit 1
 fi
 
+# check user permissions
+repoDetails=$(grep -w $repositoryPath repository-index.txt)
+usersWithReadAccess=$(echo $repoDetails | cut -d ';' -f3)
+if ! echo $usersWithReadAccess | grep -q $UID
+then
+    echo "You don't have the permission to open this repository (no READ access)"
+    exit 1
+fi
+
+# todo currently open repo should be linked to UID! so two users can have repo open at the same time
 touch currently-open-repo.txt
 echo "$repositoryPath;$repositoryName" >> currently-open-repo.txt
 
