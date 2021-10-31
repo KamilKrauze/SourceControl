@@ -87,6 +87,9 @@ do
         "Compile files in repo")
             ./compile.sh $currentlyOpenedRepoPath
         ;;
+        "Archive current repo")
+            ./archive.sh $currentlyOpenedRepoPath
+        ;;
         "Quit")
             echo -n "Quiting" #Quits the script
             echo -n "."

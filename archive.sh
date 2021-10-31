@@ -16,15 +16,15 @@ function tarBZ2Compression()
 
 function zipCompression()
 {
-	zip "$1.zip" ${@:1}
+	zip -q "$1.zip" ${@:1}
 }
 
-archiveType=$1
+read -p "Type in the archive type (tar-gz, tar-bz2, zip): " archiveType
+read -p "Type in the archive name: " archiveName
 
-repositoryPath=$(grep -w $2 repository-index.txt | cut -d ';' -f2)
-fileList=($(find $repositoryPath -type f \( ! -wholename $repositoryPath/.vc \) ))
-
-archiveName=${@:3}
+repositoryPath=$1
+lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
+fileList=($(find $repositoryPath/.vc/$lastCommitFolder -type f ))
 
 case $archiveType in
 	"tar-gz")
