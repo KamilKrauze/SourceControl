@@ -1,7 +1,8 @@
 #!/bin/bash
 
 repositoryPath=$1
-filenameToAdd=$2
+
+read -p "Type in a filename for the new file: " filenameToAdd
 
 if [ -z "$filenameToAdd" ]
 then

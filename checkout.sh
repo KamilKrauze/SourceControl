@@ -3,6 +3,11 @@
 repositoryPath=$1
 fileNameToCheckOut=$2
 
+if [ -z $fileNameToCheckOut ]
+then
+    read -p "Type in the filename of the file to check-out: " fileNameToCheckOut
+fi
+
 touch ${repositoryPath}/.vc/.currently-checked-out-files.txt
 
 if ! [ -d "$repositoryPath" ]
