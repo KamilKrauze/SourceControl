@@ -1,13 +1,31 @@
 #!/bin/bash
 
-arr=($@)
+fileNameToCheckIn=$2
 
-if ! [ "$#" -ge 2 ]; then
-    echo "Not enough arguments provided"
-    exit 1
+if [ -z $fileNameToCheckIn ]
+then
+    filesToCheckIn=()
+    while ! [ "$userInput" = "end" ]
+    do
+        read -p "Type in a filename you would like to check-in or type 'end' if you have no more files to check-in :" userInput
+        if ! [ "$userInput" = "end" ]
+        then
+            # https://stackoverflow.com/questions/1951506/add-a-new-element-to-an-array-without-specifying-the-index-in-bash
+            filesToCheckIn+=("$userInput")
+        fi
+    done 
+else
+    filesToCheckIn=( $fileNameToCheckIn )
 fi
 
-repositoryPath=${arr[0]}
+# https://stackoverflow.com/questions/65957633/check-if-array-is-empty-in-bash
+if (( ${#filesToCheckIn[@]} == 0 ))
+then
+    echo "No files provided for check-in"
+    exit 0
+fi
+
+repositoryPath=$1
 
 if ! [ -d "$repositoryPath" ]
 then
@@ -27,7 +45,7 @@ fi
 read -e -p "Commit Name: " nameOfCommit
 
 # check all provided files are files that exist in the working directory
-for file in ${arr[@]:1};
+for file in ${filesToCheckIn[@]};
 do
     fileToCheckIn=$repositoryPath/$file
     if ! [ -f "$fileToCheckIn" ]
@@ -55,7 +73,7 @@ cd ${repositoryPath}/.vc/${newCommitFolder}
 ln -s ../${lastCommitFolder}/* .
 cd "$currentShellPath"
 
-for file in ${arr[@]:1};
+for file in ${filesToCheckIn[@]};
 do
     # copy the checked-in files separately so they are not a soft link
     mv -f $repositoryPath/$file ./${repositoryPath}/.vc/${newCommitFolder}

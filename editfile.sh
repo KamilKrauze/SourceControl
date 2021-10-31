@@ -2,11 +2,10 @@
 
 
 repositoryPath=$1
-checkOutFileName=$2
+
+read -p "Type in the filename of the file you wish to edit: " checkOutFileName
+
 checkOutFile=$repositoryPath/$checkOutFileName
-
-
-
 
 # automatically check-out the file
 ./checkout.sh $repositoryPath $checkOutFileName

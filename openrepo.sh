@@ -1,4 +1,4 @@
-repositoryName=$1
+read -p "Type in the name of the repository you want to open" repositoryName
 
 if [ -s currently-open-repo.txt ]
 then

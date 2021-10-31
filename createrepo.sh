@@ -3,12 +3,10 @@ env | grep -q CYAN
 env | grep -q BLUE
 env | grep -q NC
 
-repositoryPath=$1
-repositoryName=$2
-
 touch repository-index.txt
 
-
+read -p "Type in the path of your repository:" repositoryPath
+read -p "Type in a name for your repository:" repositoryName
 
 if [ -z "$repositoryName" ]
 then
