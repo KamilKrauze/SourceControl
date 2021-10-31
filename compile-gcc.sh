@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#regex='gcc+$'
-
 gcc --version >/dev/null
 if ! [ $? -eq 0 ]; then
 	echo -e "GCC compiler not installed on this system. Please install to use this feature."
