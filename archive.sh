@@ -7,15 +7,15 @@ env | grep -q NC
 
 function tarGZCompression()
 {
-	tar --create --file="$1.tar" ${@:1}
+	tar --create --file="$1.tar" ${@:1} # Tar compression - https://linuxize.com/post/how-to-create-and-extract-archives-using-the-tar-command-in-linux/ - 31/11/2021
 }
 
 function tarBZ2Compression()
 {
-	tar -cjf "$1.tar.bz2" ${@:1}
+	tar -cjf "$1.tar.bz2" ${@:1} # Tar.bz2 compression https://linuxize.com/post/how-to-create-and-extract-archives-using-the-tar-command-in-linux/ - 31/11/2021
 }
 
-function zipCompression()
+function zipCompression() # Zip compression https://linuxize.com/post/how-to-zip-files-and-directories-in-linux/
 {
 	zip -q "$1.zip" ${@:1}
 }
