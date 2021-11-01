@@ -1,9 +1,6 @@
 repositoryPath=$1
 
-#todo: maybe if a user has checked out files, prevent them from doing rollback
-# what if another user a checked out file?
-
-# check user permissions
+# check user permissions (WRITE access to repository)
 repoDetails=$(grep -w $repositoryPath repository-index.txt)
 usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
 if ! echo $usersWithWriteAccess | grep -q $UID
@@ -15,7 +12,9 @@ fi
 echo "Listing out the changes made in the repository:"
 echo
 
+# list out all the checked-in changes together with user comments
 for directory in $repositoryPath/.vc/* ; do
+    
     filesModified=""
     for file in $directory/* ; do
         # files which were edited are the ones that aren't a soft link to a previous version
@@ -24,24 +23,22 @@ for directory in $repositoryPath/.vc/* ; do
             filesModified="$filesModified $(basename $file)"
         fi
     done
+    
     directoryBasename=$(basename $directory)
     userComment=$(grep "$directoryBasename" $repositoryPath/.vc/.changes-log.txt | cut -d ';' -f2)
+    # replace empty string with [none]
     if [ -z $userComment ]
     then 
         userComment="[none]"
     fi
 
-# todo finish formatting
-    #echo "Name of change: $directoryBasename User comment: $userComment Files modified: $filesModified"
     printf "Name of change: %-10s User comment: %-20s Files modified: %s\n" $directoryBasename $userComment "$filesModified"
 done
 
 echo
-# todo switch to a select menu
-# add option to just see diff
-read -p "Which change do you want to revert to?" changeToRevertTo
 
-# todo: this could be more robust
+read -p "Which change do you want to revert to? " changeToRevertTo
+
 if ! grep $changeToRevertTo $repositoryPath/.vc/.changes-log.txt
 then
     echo "Not a valid name of change, cancelling rollback"
@@ -50,9 +47,10 @@ fi
 
 echo
 
+# delete all folders with changes that happened after the folder user is rolling back to
 for directory in $repositoryPath/.vc/* ; do
     directoryBasename=$(basename $directory)
-    # https://stackoverflow.com/questions/8980791/shell-scripting-which-word-is-first-alphabetically
+    # Resource used to help alphabetical comparison: https://stackoverflow.com/questions/8980791/shell-scripting-which-word-is-first-alphabetically
     if [[ $directoryBasename > $changeToRevertTo ]]
     then
         rm -r $directory
@@ -73,3 +71,5 @@ do
    fi
 done < $repositoryPath/.vc/.changes-log.txt
 mv .tmp.txt $repositoryPath/.vc/.changes-log.txt
+
+echo "Rollback complete"

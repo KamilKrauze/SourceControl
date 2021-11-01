@@ -6,12 +6,12 @@ read -p "Type in gcc or javac to launch compiling process: " userInput
 
 case $userInput in
 "gcc")
-	echo -e "Running gcc compiler" #run the equivalent of "make" script
+	echo -e "Running gcc compiler"
 	bash compile-gcc.sh $repositoryPath
 	;;
 
 "javac")
-	echo -e "Running java compiler" # run the equivalent of "make script"
+	echo -e "Running java compiler"
 	bash compile-javac.sh $repositoryPath
 	;;
 *)

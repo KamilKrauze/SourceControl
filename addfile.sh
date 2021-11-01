@@ -10,17 +10,18 @@ then
     exit 1
 fi
 
-# get last commit folder
+# get folder in repository with latest changes
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 fileWithSameNameInLastCommitFolder=$(ls "${repositoryPath}/.vc/$lastCommitFolder" | grep -w "$filenameToAdd")
 
+# check that the filename is unique
 if ! [ -z "$fileWithSameNameInLastCommitFolder" ]
 then
     echo "A file with the same name already exists. Please specify a different name"
     exit 1
 fi
 
-# TODO: what if a file is identical to an UID?
+# make sure the current user doesn't already have a checked-out file
 if ! [ -z $(grep $UID ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
 then
     echo "There is already a checked-out file. Check-in that file before adding a new file"

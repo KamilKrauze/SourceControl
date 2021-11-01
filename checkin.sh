@@ -1,16 +1,21 @@
 #!/bin/bash
 
+repositoryPath=$1
+
+# if this script is called from editfile.sh script (which automatically checks-in a file), it'll get the file to check-in as an argument
+# otherwise, user is asked which files to check-in
 fileNameToCheckIn=$2
 
 if [ -z $fileNameToCheckIn ]
 then
+    # ask user for which files to check-in until they type in 'end'
     filesToCheckIn=()
     while ! [ "$userInput" = "end" ]
     do
         read -p "Type in a filename you would like to check-in or type 'end' if you have no more files to check-in :" userInput
         if ! [ "$userInput" = "end" ]
         then
-            # https://stackoverflow.com/questions/1951506/add-a-new-element-to-an-array-without-specifying-the-index-in-bash
+            # Resource used for adding to array: https://stackoverflow.com/questions/1951506/add-a-new-element-to-an-array-without-specifying-the-index-in-bash
             filesToCheckIn+=("$userInput")
         fi
     done 
@@ -18,14 +23,13 @@ else
     filesToCheckIn=( $fileNameToCheckIn )
 fi
 
-# https://stackoverflow.com/questions/65957633/check-if-array-is-empty-in-bash
+# Make sure user provided at least one file
+# Resource used for checking length of array: https://stackoverflow.com/questions/65957633/check-if-array-is-empty-in-bash
 if (( ${#filesToCheckIn[@]} == 0 ))
 then
     echo "No files provided for check-in"
     exit 0
 fi
-
-repositoryPath=$1
 
 if ! [ -d "$repositoryPath" ]
 then
@@ -33,7 +37,7 @@ then
     exit 1
 fi
 
-# check user permissions
+# check the user has permission to check-in a file (WRITE permission)
 repoDetails=$(grep -w $repositoryPath repository-index.txt)
 usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
 if ! echo $usersWithWriteAccess | grep -q $UID
@@ -42,9 +46,10 @@ then
     exit 1  
 fi
 
+# Ask the user for details of changes
 read -e -p "Commit Name: " nameOfCommit
 
-# check all provided files are files that exist in the working directory
+# check all provided files are files that actually exist in the working directory
 for file in ${filesToCheckIn[@]};
 do
     fileToCheckIn=$repositoryPath/$file
@@ -55,17 +60,14 @@ do
     fi
 done
 
-# get last commit folder
-# NB: the log file must be a hidden file so it doesnt show up here
+# get folder with latest changes in repository
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 
+# create a folder for new changes
 newCommitFolder="$(date '+%Y-%m-%d-%H-%M')_$(openssl rand -hex 3)"
 mkdir ${repositoryPath}/.vc/${newCommitFolder}
 
-# TODO: delete this when ready
-# create soft link to all files from last commit folder, relative to the path of the original file
-# ln -s -r ${repositoryPath}/.vc/${lastCommitFolder}/* ./${repositoryPath}/.vc/${newCommitFolder}
-
+# create a soft link in new commit folder linking to all files in the previous commit folder
 # since soft links are relative paths, the script first need to switch directories
 # ln --relative option exists, but seems to be unsupported on some systems
 currentShellPath=$(pwd)
@@ -75,13 +77,17 @@ cd "$currentShellPath"
 
 for file in ${filesToCheckIn[@]};
 do
-    # copy the checked-in files separately so they are not a soft link
+    # copy the checked-in files separately. It overwrites the soft link for those files and creates a hard copy
+    # the end result are hard copies of files which were edited (checked-in) an soft links of files which were not edited
     mv -f $repositoryPath/$file ./${repositoryPath}/.vc/${newCommitFolder}
 done
 
+# write details to the log file
 echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt
 
-# remove the file from the list of currently checked-out files
+# remove the file from the list of currently checked-out files to allow others to check it out
 # TODO: make it only match whole word
 grep -vE "($UID)" ${repositoryPath}/.vc/.currently-checked-out-files.txt > ${repositoryPath}/.vc/.temp.txt
 mv ${repositoryPath}/.vc/.temp.txt ${repositoryPath}/.vc/.currently-checked-out-files.txt
+
+echo "File checked-in."

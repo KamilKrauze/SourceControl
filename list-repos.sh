@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# get variables for text colours
 env | grep -q BLUE
 env | grep -q CYAN
 env | grep -q NC
