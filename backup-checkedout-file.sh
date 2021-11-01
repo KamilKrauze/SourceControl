@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Luke Stanley
+# Matriculation Number: 
+
 repositoryPath=$1
 checkedOutFileName=$2
 checkedOutFile=$repositoryPath/$checkedOutFileName

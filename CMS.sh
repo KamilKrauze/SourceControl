@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Kamil Krauze
+# Matriculation Number: 2414951
+
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 # adjust permissions for all scripts
 chmod 774 *.sh
 #Create variables that give text color - https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux - Date Visted: 19.10.2021

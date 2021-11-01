@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Luke Stanley
+# Matriculation Number: 
+
 repositoryPath=$1
 
 read -p "Type in the filename of the file you wish to edit: " checkOutFileName

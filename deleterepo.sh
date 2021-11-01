@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 # get variables for text colours
 env | grep -q BLUE
 env | grep -q RED
