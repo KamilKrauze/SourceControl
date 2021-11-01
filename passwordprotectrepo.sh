@@ -1,3 +1,6 @@
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 repositoryPath=$1
 
 # extract parts of details about the repository from repository-index.txt

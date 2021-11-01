@@ -1,3 +1,6 @@
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 repositoryPath=$1
 # get folder with latest checked-in changes
 lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)

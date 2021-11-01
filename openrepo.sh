@@ -1,3 +1,6 @@
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 read -p "Type in the name of the repository you want to open: " repositoryName
 
 # input validation

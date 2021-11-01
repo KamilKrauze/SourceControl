@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Kamil Krauze
+# Matriculation Number: 2414951
+
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 repositoryPath=$1
 
 # if this script is called from editfile.sh script (which automatically checks-in a file), it'll get the file to check-in as an argument

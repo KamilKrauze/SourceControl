@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kamil Krauze
+# Matriculation Number: 2414951
+
 # Checks if gcc is installed, redirects the output to null - this allows for suppression of the command's output.
 gcc --version >/dev/null 2>&1
 if ! [ $? -eq 0 ]; then
