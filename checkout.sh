@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Zvony Delas 
+# Matriculation Number: 2425681
+
 repositoryPath=$1
 
 # if this script is called from editfile.sh script (which automatically checks-out a file), it'll get the file to check-in as an argument

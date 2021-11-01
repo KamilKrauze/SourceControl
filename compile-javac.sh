@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kamil Krauze
+# Matriculation Number: 2414951
+
 # check if javac is installed, redirect output to null
 javac --version >/dev/null 2>&1
 if ! [ $? -eq 0 ]; then

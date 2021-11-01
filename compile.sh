@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kamil Krauze
+# Matriculation Number: 2414951
+
 repositoryPath=$1
 
 read -p "Type in gcc or javac to launch compiling process: " userInput

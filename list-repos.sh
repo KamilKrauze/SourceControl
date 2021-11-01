@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kamil Krauze
+# Matriculation Number: 2414951
+
 # get variables for text colours
 env | grep -q BLUE
 env | grep -q CYAN
