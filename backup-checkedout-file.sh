@@ -23,6 +23,13 @@ while ! [ -z $(grep $checkedOutFileName ${repositoryPath}/.vc/.currently-checked
 do
   sleep 60
 
+  # make sure file wasn't checked-in while sleeping
+  if [ -z $(grep $checkedOutFileName ${repositoryPath}/.vc/.currently-checked-out-files.txt) ]
+  then
+    echo "exit"
+    exit 0
+  fi
+
   # checks if the file exists still (in case user accidentally deletes it)
   if [ -f $checkedOutFile ]
   then
