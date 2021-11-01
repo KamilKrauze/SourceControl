@@ -1,3 +1,9 @@
+# get variables for text colours
+env | grep -q RED
+env | grep -q CYAN
+env | grep -q BLUE
+env | grep -q NC
+
 repositoryPath=$1
 
 # check user permissions (WRITE access to repository)
@@ -26,13 +32,16 @@ for directory in $repositoryPath/.vc/* ; do
     
     directoryBasename=$(basename $directory)
     userComment=$(grep "$directoryBasename" $repositoryPath/.vc/.changes-log.txt | cut -d ';' -f2)
+    authorID=$(grep "$directoryBasename" $repositoryPath/.vc/.changes-log.txt | cut -d ';' -f3)
+    # Resource used to get username from UID: https://unix.stackexchange.com/questions/36580/how-can-i-look-up-a-username-by-id-in-linux
+    authorName=$(getent passwd $authorID | cut -d: -f1)
     # replace empty string with [none]
     if [ -z $userComment ]
     then 
         userComment="[none]"
     fi
 
-    printf "Name of change: %-10s User comment: %-20s Files modified: %s\n" $directoryBasename $userComment "$filesModified"
+    printf "${CYAN}Name of change:${NC} %-10s ${CYAN}User comment:${NC} %-20s ${CYAN}Author:${NC} %s ${CYAN}Files modified:${NC} %s\n" $directoryBasename $userComment $authorName "$filesModified"
 done
 
 echo

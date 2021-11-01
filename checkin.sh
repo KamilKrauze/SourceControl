@@ -83,7 +83,7 @@ do
 done
 
 # write details to the log file
-echo "${newCommitFolder};${nameOfCommit}" >> ${repositoryPath}/.vc/.changes-log.txt
+echo "${newCommitFolder};${nameOfCommit};${UID}" >> ${repositoryPath}/.vc/.changes-log.txt
 
 # remove the file from the list of currently checked-out files to allow others to check it out
 # TODO: make it only match whole word

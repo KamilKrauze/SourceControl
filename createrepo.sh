@@ -45,7 +45,7 @@ fi
 
 # log the repo creation into the changes log
 touch ${repositoryPath}/.vc/.changes-log.txt
-echo "${initialCommitFolder};Initial-commit" >> ${repositoryPath}/.vc/.changes-log.txt
+echo "${initialCommitFolder};Initial-commit;${UID}" >> ${repositoryPath}/.vc/.changes-log.txt
 
 # add the repository to the index of repositories
 echo "${repositoryName};${repositoryPath};$UID;$UID;" >> repository-index.txt
