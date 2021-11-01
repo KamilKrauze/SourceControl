@@ -108,6 +108,9 @@ do
         "Password protect repo from deletion")
             ./passwordprotectrepo.sh $currentlyOpenedRepoPath
         ;;
+        "Show help")
+            ./help.sh
+            ;;
         "Quit")
             echo -n "Quiting" #Quits the script
             echo -n "."
