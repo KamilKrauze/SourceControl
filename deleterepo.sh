@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# get variables for text colours
 env | grep -q BLUE
 env | grep -q RED
 env | grep -q CYAN
@@ -13,7 +14,11 @@ then
 	echo -e "\n\t${RED}- Repository name does not exist.\n\t- Please enter a repository that exists${NC}"
 else
 	repositoryPath=$(grep -w $repositoryName repository-index.txt | cut -d ';' -f2)
+	
+	# get folder containing latest changes
 	lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
+
+	# check the user has WRITE permission for the repository
 	repoDetails=$(grep -w $repositoryPath repository-index.txt)
 	usersWithWriteAccess=$(echo $repoDetails | cut -d ';' -f4)
 	if ! echo $usersWithWriteAccess | grep -q $UID
@@ -22,6 +27,7 @@ else
 		exit 1  
 	fi
 
+	# if the repository is password protected, ask for password before deleting
 	existingPasswordHash=$(echo $repoDetails | cut -d ';' -f5)
 	if ! [ -z "$existingPasswordHash" ]
 	then
@@ -37,11 +43,15 @@ else
 		fi
 	fi
 	
+	# copy the files from the latest changes folder (inside .vc) to the working directory
 	if [ "$(ls -A ${repositoryPath}/.vc/${lastCommitFolder})" ] 
 	then
 		cp -l -r ${repositoryPath}/.vc/${lastCommitFolder}/* ${repositoryPath}
 	fi
+	# delete the folder keeping track of changes
 	rm -d -r ${repositoryPath}/.vc
+	
+	# remove the repository from the index
 	grep -v -w $repositoryName repository-index.txt > temp.txt
 	mv temp.txt repository-index.txt
 
