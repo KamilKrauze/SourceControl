@@ -12,7 +12,6 @@ if ! grep -q $repositoryName repository-index.txt
 then
 	echo -e "\n\t${RED}- Repository name does not exist.\n\t- Please enter a repository that exists${NC}"
 else
-	echo "Deleting repo..."
 	repositoryPath=$(grep -w $repositoryName repository-index.txt | cut -d ';' -f2)
 	lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 	repoDetails=$(grep -w $repositoryPath repository-index.txt)
@@ -34,11 +33,9 @@ else
 			echo "Password is wrong, deletion cancelled."
 			exit 1
 		else
-			echo "Correct password Deleting, remove exit 1"
-			exit 1
+			echo "Correct password, deleting repository..."
 		fi
 	fi
-
 	
 	if [ "$(ls -A ${repositoryPath}/.vc/${lastCommitFolder})" ] 
 	then
@@ -47,4 +44,6 @@ else
 	rm -d -r ${repositoryPath}/.vc
 	grep -v -w $repositoryName repository-index.txt > temp.txt
 	mv temp.txt repository-index.txt
+
+	echo "Repository has been deleted."
 fi
