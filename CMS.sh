@@ -27,10 +27,11 @@ function checkCurrentStateAndSetMenuOptions {
     echo
     echo "--------------------------------"
     
-    if [ -s currently-open-repo.txt ]
+    repoThatCurrentUserHasOpen=$(grep $UID currently-open-repo.txt)
+    if ! [ -z $repoThatCurrentUserHasOpen ]
     then
-        currentlyOpenedRepoName=$(cut -d ';' -f2 currently-open-repo.txt)
-        currentlyOpenedRepoPath=$(cut -d ';' -f1 currently-open-repo.txt)
+        currentlyOpenedRepoName=$(echo $repoThatCurrentUserHasOpen | cut -d ';' -f2)
+        currentlyOpenedRepoPath=$(echo $repoThatCurrentUserHasOpen | cut -d ';' -f1)
         echo "CMS.sh: You are currently working in repository: $currentlyOpenedRepoName (PATH: $currentlyOpenedRepoPath)"
         
         touch ${currentlyOpenedRepoPath}/.vc/.currently-checked-out-files.txt

@@ -1,7 +1,8 @@
 read -p "Type in the name of the repository you want to open: " repositoryName
 
 # input validation
-if [ -s currently-open-repo.txt ]
+repoThatCurrentUserHasOpen=$(grep $UID currently-open-repo.txt)
+if ! [ -z $repoThatCurrentUserHasOpen ]
 then
     echo "There is already an opened repository. Close it before opening another one."
     exit 1
@@ -30,7 +31,7 @@ fi
 
 # make note that the repository is currently open
 touch currently-open-repo.txt
-echo "$repositoryPath;$repositoryName" >> currently-open-repo.txt
+echo "$repositoryPath;$repositoryName;$UID" >> currently-open-repo.txt
 
 echo "Repository opened."
 # list contents of current repository automatically
