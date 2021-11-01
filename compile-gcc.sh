@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# check if gcc is installed, redirect output to null
+# Checks if gcc is installed, redirects the output to null - this allows for suppression of the command's output.
 gcc --version >/dev/null 2>&1
 if ! [ $? -eq 0 ]; then
 	echo -e "GCC compiler not installed on this system. Please install to use this feature."
-	exit
+	exit 1
 fi
 
 repositoryPath=$1
@@ -16,9 +16,10 @@ lastCommitFolder=$(ls ${repositoryPath}/.vc | sort -r | head -n 1)
 coutput=($(find $repositoryPath/.vc/$lastCommitFolder -type f -name "*.c"))
 houtput=($(find $repositoryPath/.vc/$lastCommitFolder -type f -name "*.h")) 
 
+# Checks if there are any source files within that repository for the gcc compiler to use.
 if [ -z ${coutput[0]} ]; then
 	echo "No source files found... exiting"
-	exit
+	exit 1
 fi
 
 # ask the user for the output filename
@@ -28,3 +29,4 @@ read -p "Executable name: " execName
 gcc -Werror -Wall -Wextra -o $repositoryPath/$execName ${coutput[@]} ${houtput[@]}
 
 echo "Compilation done."
+exit 0
